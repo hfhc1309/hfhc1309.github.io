@@ -1,110 +1,1173 @@
-
-/*
- *--------------字符串命名说明--------------------
- * introduce = 介绍
- * sty1 ==the first  style   第一种样式
- * trs1 = the first transition language   第一组过渡语
- * lingtheight == gramm lightheight     高亮语法
- * scrollRight == 源码版向右移动
- * drawBoard ==画板，用于盛放简历内容
- * resume == 简历内容
- * str == 总的拼接字符串
- * 
+/**
+ * Created by wuyiping on mac pro on 16/8/20.
+ * 整个 动画 以示 任务运动带动的 任务运动 外加定位
+ * 作品里面 添加一些面向对象的函数 比如 各种背景层的运动  还有各种物体的动画  都可以抽象出来 携程 面向对象的方式
+ /**
+ *变量 太多了  定义一个命名规则吧   F_ 开头 就是 函数 O_ 就是 元素 或者单一变量 A_ 开头 就是数组 维数组  C_开头 就是 构造函数
+ * 千万别改 人物定位 不然 就毁了
  */
 
-/*字符拼接区*/
-	 var introduce='\n  \/*我叫张三，来自广东深圳*\/\n  \/*我今年10岁，毕业于哈佛商学院，吹牛大王专业*\/\n  \/*接触前端一年，我的理想是当一名前端工程师*\/\n  \/*来看看我为你准备的菜，先来点CSS，加点基本样式......*\/';
-	var sty1='\n   body{\n    transition: all 1s;\n    background:#333034;\n     }\n    #sourceBoard{\n    font-family:"微软雅黑";\n    overflow:auto;\n    border:3px solid black;\n    border-radius:5px;\n    width:500px;\n    height:400px;\n    font-size:14px;\n    font-weight:900;\n  }';
-	var trs1 = '\n  \/*似乎有点单调，那么就让语法高亮吧*\/';
-    var lightheight = '\n  #sourceBoard{\n   background:#ffffcc\n  }\n    .token.property{\n   color:#905;\n   }\n   .token.comment{\n     color:#cc3300;\n}\n    .token.selector{\n    color:#690;\n     }\n  '; 
-    var trs2 = '  \/*接下来，我需要准备一下简历。先将刚才写的样式踢到一边儿去*\/'
-    var scrollRight = '\n  #sourceBoard{\n    -webkit-transform: rotateY(10deg);\n    -moz-transform: rotateX(10deg);\n     position:relative;\n    left:65%; } \n    \/*OK,接下来开始准备简历板*\/\n  '
-    var drawBoard = '#drawBoard{\n  color:#fff;\n  float:left;\n  position:relative;\n  top:-440px;\n  width:860px;\n  height:600px;\n  border:5px solid #CCC;\n   border-radius:5px;\n  overflow:auto;\n  }'
-    var resume= '\n  # <center>张三_前端开发简历</center>\n  ----------------------------------------------\n  ## 工作经历: ## \n  ----------------------------------------------\n  ### 1.一二三四五六七八九学校：音乐教师 ### \n   "虽然跟前端无关，但是简历一定要写出来"。By腾讯HR \n\n  ### 2. 中国某某网 (政府媒体)：前端开发 ### \n  1.  专题设计\n  2.  频道维护\n  3.  对接后台搭建前端模版\n  4.  前端性能优化与前沿技术学习\n  5.  业务成就：\n  1.主导技术选型、方案设计、代码编写，完成中国某某网二级子频道页面进行响应式改版。\n      >改版前 : http://news.lanzhou.cn/system/2018/01/27/011502919.shtml\n      >改版后 : http://news.lanzhou.cn/system/2018/01/11/011492028.shtml \n----------------------------------------------\n  ### 技术栈 ### \n----------------------------------------------\n      0. JavaScript/jQuery\n  1. Bootstrap\n  2. Nodejs\n  3. AngularJs\n  4. CSS3\n  5. Ajax\n  6. Webpack\n  ### 项目汇总 ### \n  [https://github.com/ZQ-jhon/-](https://github.com/ZQ-jhon/-)  \n  ### 博客\n  ----------------------------------------------\n  1. CSDN博客：[我的CSDN博客](http://blog.csdn.net/qq_20264891)\n  2. GitHub博客：[我的GitHub博客](https://ZQ-jhon.github.io)'
-    var trs3 = '\n  \/*对了，这个简历是markdown语法，应该改成html才看着舒服。\n  *接下来变个魔术\n  *倒数3个数字\n  *3......\n  *2......\n  *1......\n  *OK,这就是为您准备的菜，祝享用愉快！ */'
-	var str = introduce.concat(sty1).concat(trs1).concat(lightheight).concat(trs2).concat(scrollRight).concat(drawBoard).concat(resume).concat(trs3);
+var Allcontainer = document.getElementById('adventure');//整个 外部框架
+var HeadDiv = document.getElementById('Head');// 标题
+var OKarl2 = document.getElementById('Karl');//男主角
+var O_karl = document.getElementById('Karlvicent');//男主角
+var fallAnimation = document.getElementById('fallAnimation');//
+var fallAnimationIMG = document.getElementById('fallAnimationIMG');
+fallAnimationIMG.src = newimages[0].src;
+//人物掉落动画
+var Keynotice = document.getElementById('keybord');//按键提示
+var CaodiAndDadi = document.getElementById('layer-hen-3');//草地层
 
-	/*常规定义区*/
-	var styleTag = document.getElementById('styleTag');
-	var sourceBoard = document.getElementById('sourceBoard');
-	var n = 0;
+var O_CaodiAndDadi = document.getElementById('layer-ludi-caodi-1');
+var O_shanAndbird = document.getElementById('layer-hen-2');//树林
+var O_farMountain1 = document.getElementById('layer-hen-4');//远山  飞鸟
+var O_farerMountain1 = document.getElementById('layer-hen-5');//远山
+var OC_seawoodboard = new C_actor('woodbord2');//海 木牌
+var O_Sea = document.getElementById('layer-sea');
+var O_sky = document.getElementById('skyAnimation');
+var O_DaF=  document.getElementById('dock-and-floor');
+var O_DaW=  document.getElementById('dock-wood');
+O_Sea.Onoff = false;
+var O_steel = document.getElementById('layer-dock');
+var O_rocketAudio = document.getElementById('rocketAudio');
+O_steel.Onoff=true;
+var O_Baiduyun = document.getElementById('Baiduyun');
+var walksteps = 0;
+var onoff = false;
+var OT_karlswimAnimation = null;
+var O_rocket = document.getElementById('rocket');
+var O_skyAddon = document.getElementById('sky-addon');
+var O_csky5 = document.getElementById('sky5');
+var O_about = document.getElementById('About');
+var O_chengdu = document.getElementById('chengdu');
+var O_school = document.getElementById('school-Ob');
+var O_car1 = document.getElementById('Car1');
+var O_Guangbiao = document.getElementById('Guangbiao');
+var O_Tinnyplane = document.getElementById('Tinny-plane');
+var O_HotBalon = document.getElementById('HotBalon');
+var O_brickWall = document.getElementById('brickwall');
+var O_Tv = document.getElementById('bigTvArea');
 
-	 
-/*源码版控制区*/	 
-var controller= setInterval(put,90);
-	 function put(){
+var words = [
+    '大家好 欢迎来到我的个人简历!',
+    '这是我的个人技能',
+    '我来自"海滨邹鲁"——汕头',
+    '我就读于佛山科学技术学院 🎓',
+    '这是我的技能表💪',
+    '目前我在学校的工作室里维护学校的网页站点💻',
+    '这里是我的部分作品,鼠标滑到上面,点击查看📚',
+    '注意看电视📺',
+    '好了,准备好,我们要跳出地球了 ✈️'
+];
+var wordTimeOut = null;
+var wordTimer = null;
+var wordTimer2 = null;
+var iWord =document.getElementById('iWord');
+O_about.Onoff = true;
+O_csky5.Onoff = false;
+var n = 1;
+// $('#stationery').hide();
 
-			/*吐代码区域*/
-			n++;
-		
-			if(n>0&&n<=929){
-					sourceBoard.innerHTML =str.substring(0,n)
-		
-		
-			    styleTag.innerHTML =str.substring(0,n);
-	
-			}
-			
-			/*溢出下拉*/
-			if(n>=380){
-					$('#sourceBoard').animate({
-						scrollTop: 1000
-						}, 50);
-			}
-			/*代码高亮*/
-			if(n>=465&&n<=929){
-				sourceBoard.innerHTML =  Prism.highlight(str.substring(0,n), Prism.languages.css);
-			
-			}
-		
-		/*创建pre简历板*/
-			if(n>=672&&n<=929){
-				
-				if(document.getElementById('drawBoard')){
-					console.log('drawBoard元素已经存在');
-				
-				}
-				else{
-					var drawBoard = document.createElement('pre');
-				    drawBoard.id = 'drawBoard';
-				    document.body.appendChild(drawBoard);
-				  
-				} 
 
-			}
-			
-			/*简历板溢出下拉*/
-			if(n>929&&n<1885){
-			var drawBoard = document.getElementById('drawBoard');
-				drawBoard.innerHTML =str.substring(929,n);
-				
-					$('#drawBoard').animate({
-						scrollTop: 1000
-						}, 50);
-			}
+//O_Car1Imgsrc.src = '../img/dataDEMO/construction/Car.png';
+//记录当前 创口里面HEAD层真实的位置   用于适配 所有屏幕用的
+window.onresize = positionReset;  //添加 窗口改变时 改变人物位置
+setInterval(function(){
+    console.log(walksteps)
+},100);
 
-		/*简历板写完之后，需要在sourceBoard中写入魔术代码*/	
-	     if(n>=1885){
-	     
-	     	  sourceBoard.innerHTML =  Prism.highlight(str.substring(0,929), Prism.languages.css)+Prism.highlight(str.substring(1883,n), Prism.languages.css);
-	     	  
-	     	  
-	     }
-	     
-	     /*魔术代码*/
-	     if(n>=1977){
-	     	var drawBoard = 	document.getElementById('drawBoard');
-	     	drawBoard.innerHTML =marked(str.substring(929,1885));
-	     	
-	     		if(n>str.length){window.clearInterval(controller)}
-	     }
-				
-		
-				
-		
-			console.log(n)
-			
-			
-		
-	
+var Aimg = document.getElementsByClassName('forestIMG');
+for (var i = 0;i<Aimg.length;i++){
+    Aimg[i].src = newimages[4].src;
+}
+
+var Oimg_dadi = document.getElementsByClassName('dadi')[0];
+Oimg_dadi.style.backgroundImage = 'url('+newimages[5].src+')';
+
+var Oimg_cao = document.getElementsByClassName('cao')[0];
+Oimg_cao.style.backgroundImage = 'url('+newimages[6].src+')';
+var Aimg_treeA = document.getElementsByClassName('tree-A');
+for ( i = 0;i<Aimg_treeA.length;i++){
+    Aimg_treeA[i].style.backgroundImage = 'url('+newimages[7].src+')';
+}
+
+var Aimg_treeB = document.getElementsByClassName('tree-B');
+for ( i = 0;i<Aimg_treeB.length;i++){
+    Aimg_treeB[i].style.backgroundImage = 'url('+newimages[8].src+')';
+}
+var Aimg_treeC = document.getElementsByClassName('tree-C');
+for ( i = 0;i<Aimg_treeC.length;i++){
+    Aimg_treeC[i].style.backgroundImage = 'url('+newimages[9].src+')';
+}
+
+
+var titleKarl = document.getElementById('title-karl');
+titleKarl.style.backgroundImage = 'url('+newimages[10].src+')';
+
+var Oimg_farmount1 = document.getElementById('far-mountain-1');
+Oimg_farmount1.src = newimages[11].src;
+
+var Oimg_farmount2 = document.getElementById('far-mountain-2');
+Oimg_farmount2.src = newimages[12].src;
+
+
+var Oimg_Tinny = document.getElementById('Tinny-plane');
+Oimg_Tinny.src = newimages[13].src;
+
+var Oimg_HotBalon = document.getElementById('HotBalon');
+Oimg_HotBalon.src = newimages[14].src;
+
+var Oimg_farer1 = document.getElementById('farer-mountain1');
+Oimg_farer1.src = newimages[15].src;
+
+var Oimg_farer2 = document.getElementById('farer-mountain2');
+Oimg_farer2.src = newimages[15].src;
+
+var Oimg_wood = document.getElementById('woodbordIMG');
+Oimg_wood.src = newimages[16].src;
+
+
+var Oimg_plants =  document.getElementById('plants');
+var Aimg_mill = Oimg_plants.getElementsByTagName('img');
+for ( i = 0;i<Aimg_mill.length;i++){
+    Aimg_mill[i].style.backgroundImage = 'url('+newimages[17].src+')';
+}
+
+
+
+O_Tinnyplane.style.left = '6100px';
+O_Tinnyplane.style.top = '1000px';
+
+O_HotBalon.style.left = '6100px';
+O_HotBalon.style.top = '1100px';
+//     var KarlWalk  = new AnimationObjects({who:OKarl2,where:'',how:Walking}); //没卵用啊 ??
+// console.log(KarlWalk);
+
+positionReset();
+F_meettheAbout();
+
+function Walking() {//这个函数要 加工一下 因为就是这函数带动全部函数运动
+    OKarl2.style.display = "block";
+    O_karl.className= "walkAnimation walk_" +0;
+    F_addKeyListener(walkstyle1, walkstyle2, walkstyle2);
+}
+
+function Walking2() {
+    OKarl2.style.display = "block";
+    O_karl.style.backgroundImage= 'url('+newimages[3].src+')';
+    O_karl.className= "walkAnimation walk_" +0;
+    F_addKeyListener(walkstyle1, walkstyle5, walkstyle5);
+
+}
+
+
+//开一个定时器 时刻 关注 步伐变化  步伐变了   背景 就跟这改变 而且这个背景 改变之后 不会因为
+
+var moveBackgroundTimer = setInterval(function () {
+    changeCaodiLayer();
+    positionHeadDiv();
+    F_changeMountain();
+    F_meet();
+}, 10);
+
+function changeCaodiLayer() {
+    CaodiAndDadi.style.left = -walksteps * 50 + 'px';
+}
+
+
+function positionHeadDiv() { //在浏览器窗口改变的时候 重新定位 树木标题  不过我觉得这个要改改了
+    //console.log(HeadDiv);
+    HeadDiv.style.left = 0.5 * ( Allcontainer.offsetWidth - HeadDiv.offsetWidth) + CaodiAndDadi.offsetLeft + 'px';
+}
+
+function F_changeMountain() {
+    O_shanAndbird.style.left = -walksteps * 20 + "px";
+    O_farMountain1.style.left = -walksteps * 10 + "px";
+    O_farerMountain1.style.left = -walksteps * 7 + "px";
+}
+function positionKarl() {
+    OKarl2.style.left = "50%";
+    OKarl2.style.bottom = "20%";
+    OKarl2.style.marginBottom = "-10px";
+    //     console.log(document.documentElement.clientHeight*0.2-10+'px');
+    //     OKarl2.style.bottom = document.documentElement.clientHeight*0.2-10+'px'; //保证人物一直在草地上
+}
+
+function positionReset() {
+    positionHeadDiv();
+    positionKarl();
+}
+
+
+//如何设置一个函数 在触发位置  改变  图片  并且覆盖 walk
+function F_meet() {  //判断 是否运动到触发点
+    var n = F_Sbleft(O_karl);
+    if (!OC_seawoodboard.Onoff) {
+        if (n >= OC_seawoodboard.itsleft() + 20) {
+            F_removeKeyListener(walkstyle1, walkstyle2, walkstyle2);//停止 运动监听  开始 动画模式
+            F_JumpInTheSea();//跳入海
+            F_flyhelmet();
+            OC_seawoodboard.Onoff = true;
+        }
+    }
+}
+
+// function F_rmeet(){
+//     var n =O_karl.offsetLeft;
+//     console.log(O_CaodiAndDadi.offsetLeft);
+//     if (n<=$(O_CaodiAndDadi).offset().left+O_CaodiAndDadi.offsetWidth){
+//         F_removeKeyListener(walkstyle3,walkstyle4,walkstyle4);
+//     }
+//
+// }
+
+
+
+
+
+
+function F_Sbleft(obj) {
+    return $(obj).offset().left + $(obj).width();
+}
+
+/*面向对象来改进*/
+
+
+
+
+
+function walkstyle1(ev) {
+    if (ev.keyCode == "32"|| οnmοusemove == "myMouseMove()") {
+        walksteps++;
+        O_karl.className = "walkAnimation walk_" + (walksteps % 4);
+        clearInterval(timer2);hideKeynotice();
+        //console.log($(O_CaodiAndDadi).offset().left);
+    }
+    ev.preventDefault();
+}
+
+
+function walkstyle2(ev) {
+    if (ev.wheelDelta) {//Chrome下,e.wheelDelta<0向下滚动
+        onoff = ev.wheelDelta < 0 ? true : false;
+    }
+    if (ev.detail) {//火狐下
+        onoff = ev.detail > 0 ? true : false;
+    }
+
+    if (onoff) {
+        walksteps++;
+        O_karl.className = "walkAnimation walk_" + (walksteps % 4);
+        clearInterval(timer2);hideKeynotice();
+    } else {
+        walksteps = walksteps <= 0 ? walksteps = 0 : walksteps - 1;
+        O_karl.className = "walkAnimation walk_" + (walksteps % 4);
+        clearInterval(timer2);hideKeynotice();
+    }
+}
+
+
+
+function walkstyle4(ev){
+
+        if (ev.wheelDelta) {//Chrome下,e.wheelDelta<0向下滚动
+            onoff = ev.wheelDelta < 0 ? true : false;
+        }
+        if (ev.detail) {//火狐下
+            onoff = ev.detail > 0 ? true : false;
+        }
+
+        if (onoff) {
+            walksteps++;
+            F_meettheWall(O_steel,false,0);
+            if(!O_steel.Onoff){
+                clearInterval( OT_karlswimAnimation);
+                $(O_karl).stop();
+                document.removeEventListener('keyup',F_floatdown);
+                // O_steel.Onoff = true;
+                F_removeKeyListener(walkstyle3,walkstyle4,walkstyle4,function () {
+                    F_shuChangeback2();
+                });
+            }
+            if(!O_Sea.Onoff) {
+                $(O_karl).stop().animate({'bottom': '100'}, 2000, "easeInCubic"); //附上上来
+                $('#bubles').stop().animate({'-24': '76'}, 2000, "easeInCubic");
+                O_Sea.Onoff=true;
+            }
+
+        } else {
+        F_meettheWall(O_CaodiAndDadi,true,0);
+
+            //ar OT_shifouzhuangdaoleludi=
+            if (walksteps<=155){
+                walksteps +=0;
+            }else{
+                walksteps = walksteps - 1;
+                if(O_Sea.Onoff) {
+                    // console.log('down');
+                    $(O_karl).stop().animate({'bottom': '0'}, 3000, "easeInCubic");
+                    $('#bubles').stop().animate({'top': '76'}, 3000, "easeInCubic");
+                    O_Sea.Onoff=false;
+                }
+            }
+        }
+    }
+
+function walkstyle3(ev) {
+    if (ev.keyCode == "32") {
+        walksteps++;
+        F_meettheWall(O_steel,false,0);
+        if(!O_steel.Onoff){
+            clearInterval( OT_karlswimAnimation);
+            $(O_karl).stop();
+
+             O_steel.Onoff = true;
+            document.removeEventListener('keyup',F_floatdown);// 取消监听  float
+            F_removeKeyListener(walkstyle3,walkstyle4,walkstyle4,function () {//取消监听 游泳事件
+                F_shuChangeback2();//改变 背景
+            });
+
+            // console.log('撞墙了');
+        }
+        if(!O_Sea.Onoff) {
+            $(O_karl).stop().animate({'bottom': '100'}, 2000, "easeInCubic"); //附上上来
+            $('#bubles').stop().animate({'top': '-24'}, 2000, "easeInCubic");
+            O_Sea.Onoff=true;
+        }
+    }
+    ev.preventDefault();
+}
+
+
+function walkstyle5(ev) {
+
+    if (ev.wheelDelta) {//Chrome下,e.wheelDelta<0向下滚动
+        onoff = ev.wheelDelta < 0 ? true : false;
+    }
+    if (ev.detail) {//火狐下
+        onoff = ev.detail > 0 ? true : false;
+    }
+
+
+    if (onoff) {
+        walksteps++;
+        O_karl.className = "walkAnimation walk_" + (walksteps % 4);
+    } else {
+
+        if (walksteps<=255){
+            walksteps +=0;
+        }else{
+            walksteps = walksteps - 1;
+            O_karl.className = "walkAnimation walk_" + (walksteps % 4);
+        }
+    }
+}
+
+
+function F_floatwheswim(){  //有用的时候稍微浮起来 一点 f放手 又飘下去
+    document.addEventListener('keyup',F_floatdown)
+}
+
+function F_floatdown(){
+    //console.log('down');
+    if(O_Sea.Onoff) {
+        // console.log('down');
+        $(O_karl).stop().animate({'bottom': '0'}, 3000, "easeInCubic");
+        $('#bubles').stop().animate({'top': '76'}, 3000, "easeInCubic");
+        O_Sea.Onoff=false;
+    }
+}
+
+function F_JumpInTheSea(Callback) {
+    F_shuChangeback();
+    F_stationeryHide();
+    var i = 0;
+    var T_SwimSeaTimer = setInterval(function () {
+        if (i <= 5) {
+            walksteps++;
+        }
+        if (i >= 19) {
+            clearInterval(T_SwimSeaTimer);
+        }
+
+
+        O_karl.className = "swim_" + i;
+        i++;
+    }, 30);
+
+    Callback&&Callback();
+
+}
+
+
+/**
+ * 背景上升。。。。。是不是就应该关掉 position Karl 或者改变 不用?
+ * 直接 把下面的东西拉起来?
+ * @constructor
+ */
+
+function F_shuChangeback() {  //海平面向上
+    positionKarl();
+    O_karl.style.maxWidth = '160px';
+    O_karl.style.marginBottom = "-10px";
+    O_karl.style.backgroundImage= 'url('+newimages[1].src+')';
+    O_karl.style.backgroundRepeat = 'none-repeat';
+    O_Sea.style.top= "90%";
+
+    $(CaodiAndDadi).animate({'top': "-75%"}, 'slow', "easeOutExpo", function () {
+        $('#bubles').addClass('ALLdisplayshow');
+        $(O_shanAndbird).addClass('displaynone');
+        //$('#woodbord2').addClass('displaynone');
+        $(O_karl).animate({'marginBottom':20}, 'slow', "linear", function () {
+            F_swimAnimation();
+            F_meet1.meet();
+            F_addKeyListener(walkstyle3,walkstyle4,walkstyle4,function () {
+                F_floatwheswim();
+
+            })
+        });
+    });
+
+}
+
+
+
+function F_swimAnimation() { //游泳动画
+    var i = 0;
+    O_karl.style.marginBottom = '40px';
+    O_karl.style.marginLeft = '-67px';
+    O_karl.style.backgroundImage= 'url('+newimages[2].src+')';
+    O_karl.className = "swim2_" + i;
+     OT_karlswimAnimation = setInterval(function () {
+        i++;
+        if (i >= 39) {
+            i = 0;
+        }
+        O_karl.className = "swim2_" + i;
+    }, 50);
+
+}
+var Fish1 = new C_fish('Fish1');
+var Fish2 = new C_fish('Fish2');
+var Fish3 = new C_fish('Fish3');
+/*定义鱼游泳动画*/
+
+var F_meet1 =new F_crashActor('Web-Software',function () {
+    Fish1.Animate();
+    F_displayWords(words[4]);
+    F_meet2.meet();
+});
+
+
+var F_meet2 =new F_crashActor('Coding',function () {
+    Fish2.Animate();
+    F_meet3.meet();
+});
+
+
+var F_meet3 =new F_crashActor('OtherCoding',function () {
+    Fish3.Animate();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function F_addKeyListener(a, b, c,Callback) {
+    document.addEventListener('keydown', a);  //直接解除这些个绑定 不就行了吗!!!
+    document.addEventListener('mousewheel', b);
+    document.addEventListener('DOMMouseScroll', c);
+    Callback&&Callback();
+}
+
+function F_removeKeyListener(a, b, c,Callback) {
+    document.removeEventListener('keydown', a);  //直接解除这些个绑定 不就行了吗!!!
+    document.removeEventListener('mousewheel', b);
+    document.removeEventListener('DOMMouseScroll', c);
+    Callback&&Callback();
+}
+
+
+function F_meettheWall(obj,LR,long){
+    if(LR) {
+
+        var n = parseFloat($(O_karl).offset().left) + long;
+        obj.timer = setInterval(function () {
+            if (n <= parseFloat($(obj).offset().left) + parseFloat(obj.offsetWidth)) {
+                obj.Onoff = false;//如果从右到左 的时候
+                clearInterval(obj.timer);
+            } else {
+                obj.Onoff = true;
+            }
+        }, 20);
+    }else{
+        var n = parseFloat($(O_karl).offset().left) +parseFloat(O_karl.offsetWidth) ;
+        // console.log(n+'-----------'+parseFloat($(obj).offset().left));
+        // console.log('钢板or火箭'+parseFloat($(obj).offset().left));
+        obj.timer = setInterval(function () {
+            if (n >= parseFloat($(obj).offset().left)+long ) {
+                clearInterval(obj.timer);
+                obj.Onoff = false;//如果从左到右 的时候
+            } else {
+                obj.Onoff = true;
+            }
+        }, 20);
+    }
+}
+
+function swimTOwalk(){
+    var i=0;
+    $(O_karl).animate({'bottom': 0+'px'}, 'fast', "easeInCirc");
+    var OT_swimTOwalktimer = setInterval(function(){
+        if(i<=10){walksteps++}
+        O_karl.src ='img/swimTOwalk/swimTOwalk_'+i+'.png';
+        if(i>=59){clearInterval(OT_swimTOwalktimer);
+            // console.log('开启运动模式');
+
+            Walking2();  //此处 开启在船坞上面的判断
+            F_meetsteelRight();
+        $('#smalldog').css({'left':'0'});
+            F_meettheWall(O_rocket,false,180);
+            F_meetsteelRight();
+            var OT_rocketTimer1 = setInterval(function(){
+                // console.log(parseFloat(O_karl.offsetLeft) +parseFloat(O_karl.offsetWidth)+'karl');
+                // console.log('火箭'+parseFloat($(O_rocket).offset().left));
+                if(!O_rocket.Onoff){
+                 //  F_rocketFly();  先是人物 跳上 火箭  这个后面调节
+                 //背景声音响起
+                 //火箭起飞
+                    $(O_karl).animate({'bottom':'100px'},100,'easeOutCirc');
+                    O_karl.style.backgroundImage= 'url('+newimages[18].src+')';
+                    clearInterval(OT_rocketTimer1);
+                    var i = 0;
+                    var O_karlTimer = setInterval(function(){
+                        i++;
+                        if(i<=19){
+
+                            O_karl.className = 'gotorocket gotorocket_'+i;
+                        }else {
+                            clearInterval(O_karlTimer);
+                            O_karl.className = 'hide';
+                        }
+
+                    },30);
+                    F_removeKeyListener(walkstyle1, walkstyle5, walkstyle5);
+                    O_rocketAudio.play();
+                    F_displayWords(words[8]);
+                    setTimeout(function () {
+                        F_rocketFly();
+
+                    },7000);
+
+                    O_rocket.Onoff=true;
+                }
+
+            },20)
+
+        }
+        i++;
+    },15);
+
+
+
+        }
+
+
+
+
+function F_shuChangeback2(){
+    positionKarl();
+    O_meetCar1.meet();//判断 百度云
+    O_karl.style.maxWidth = '160px';
+    O_karl.style.marginBottom = '0px';
+    $('#bubles').removeClass('ALLdisplayshow').addClass('displaynone');
+
+    $(O_shanAndbird).addClass('ALLdisplayshow');
+
+    //O_Sea.style.top= "80%";
+    //$(O_Sea).animate({'top': "80%"}, 'slow', "easeOutExpo");
+    swimTOwalk();
+    $(CaodiAndDadi).animate({'top': 0+'px'}, 500, "linear",function () {
+
+    });
+
+
+
+
+
+}
+
+/*自制检测碰撞对象*/
+function F_crashActor(id,cal,num){
+    this.object = document.getElementById(id);
+    this.Onoff = false;
+    this.num = num;
+    this.callback = cal
+
+}
+
+F_crashActor.prototype.meet = function () {
+    var that = this;
+    var n = 0;
+    if(this.num){
+       n =this.num;
+    }else {
+        n =0 ;
+    }
+
+    F_meettheWall(that.object,false,n);
+    that.timer = setInterval(function () {
+        if(!that.object.Onoff){
+            clearInterval(that.timer);
+            that.callback&&that.callback();
+        }
+    },20);
+}
+
+/*鱼移动动画*/
+function C_fish(clas) {
+    this.object = document.getElementsByClassName(clas);
+}
+
+C_fish.prototype.Animate = function () {
+    var that = this;
+    var i=0;
+    that.timer = setInterval(function(){
+
+        that.object[i].style.left = '0';
+        i++;
+        if(i>=that.object.length){
+            clearInterval(that.timer );
+            i=0;
+        }
+    },300)
+}
+
+
+
+/**
+ * 自制了一个帧动画js调用对象
+ *
+ * @param id     获取对象
+ * @param urlF   url前缀
+ * @param urlE   url后缀
+ * @param num    图片的张数
+ * @param settime   动画运行快慢
+ * @param Callback  当动画完成后 是否有回调? 回调的话就 停止当前动画  继续下一个  如果没有 就进行循环动画
+ * @param backnumber    动画第一遍 可能有一个初始化动画  在后面循环的时候可能就没用了
+ *          比如火箭发射 初始有一个或图案由小变大的过程
+ * @constructor
+ */
+function C_actor(id,classF,num,settime,Callback,backnumber,startnumber) {
+    this.Object=document.getElementById(id);
+    this.Onoff = false;
+    this.classF = classF;
+    this.num = num;
+    this.setTime = settime;
+    this.callback = Callback;
+    this.backnumber = backnumber;
+    this.start = startnumber;
+    //this.prototype.startAnimation(urlF,urlE,num,settime)
+}
+
+
+C_actor.prototype.itsleft = function () {
+    return $(this.Object).offset().left;
 };
+
+C_actor.prototype.startAnimation =function () {
+    var i= this.start;
+    var  that =this;
+    that.timer=setInterval(function(){
+        i++;
+        that.Object.className = that.classF +i;
+        // console.log()
+        //如果有回调函数那在动画完了之后 关闭动画  开始回调函数
+        if(i>=that.num){
+
+            if(that.callback) {
+                clearInterval(that.timer);
+                that.callback();
+            }else {
+                // if(that.backnumber){
+                //     i=that.backnumber;
+                // }else{
+                //     clearInterval(that.timer);
+                // }
+                i = that.start;
+            }
+        }
+
+    },that.setTime)
+};
+
+var O_meetCar1 = new F_crashActor('Car1',function(){
+        Baiduyun_Ani();
+    F_displayWords(words[5]);
+    O_meetBigCar.meet();
+});
+
+
+var O_meetBigCar = new F_crashActor('BigCarArea',function () {
+    setTimeout(function(){
+        BigCar_Ani();
+        F_displayWords(words[6]);
+    },1000);
+
+    O_meetTv.meet();
+
+});
+
+var O_meetTv = new F_crashActor('bigTvArea',function () {
+    F_displayWords(words[7]);
+    TV_show();
+});
+
+// O_Car1Img.Object.style.backgroundImage = O_Car1Imgsrc;
+
+
+
+
+
+
+
+
+function Baiduyun_Ani() {
+    F_removeKeyListener(walkstyle1, walkstyle5, walkstyle5);
+    setTimeout(function () {
+        F_addKeyListener(walkstyle1, walkstyle5, walkstyle5);
+    },2000);
+    $('#Car1Img').animate({'left':'100'},1000,'linear',function(){
+        $('#Fandou').css({'transform':'rotate(-30deg)'});
+
+        $('#FandouTanhuang').css({'transform':'rotate(60deg)'});
+
+
+        $('#Baiduyun').css({'transform':'rotate(-90deg)'}).animate({'bottom':0,'left':'-60'},{'duration':500,'queue':false},'linear');
+        $('#Baiduyun')
+    });
+    $('#Baiduyun').animate({'left':'48px'},1000,'linear');
+
+    $('.Luntai').css({'transform':'rotate(-360deg)'});
+}
+
+
+function  BigCar_Ani() {
+    F_removeKeyListener(walkstyle1, walkstyle5, walkstyle5);
+    setTimeout(function () {
+        F_addKeyListener(walkstyle1, walkstyle5, walkstyle5);
+    },2000);
+    $('#BigCar').css({'left':0});
+    $('.Luntai2').css({'transform':'rotate(-270deg)'});
+}
+function TV_show() {
+    var Movie4 = document.getElementById('dpa4');
+    setTimeout(function () {
+        F_removeKeyListener(walkstyle1, walkstyle5, walkstyle5);
+        $('#dpa1').hide();
+        $('#TVbtn2').css({'transform':'rotate(30deg)'})
+    },1000);
+
+    setTimeout(function () {
+        $('#dpa2').hide();
+        $('#TVbtn2').css({'transform':'rotate(60deg)'})
+        F_addKeyListener(walkstyle1, walkstyle5, walkstyle5);
+    },2000);
+
+    setTimeout(function () {
+        $('#dpa3').hide();
+        $('#TVbtn2').css({'transform':'rotate(90deg)'})
+
+    },3000);
+
+    setTimeout(function () {
+        Movie4.style.background= 'url(./img/dataDEMO/construction/TVshow/jobs.gif) no-repeat';
+        Movie4.style.backgroundColor = '#fff';
+        Movie4.style.backgroundPositionX = '-40px';
+    },3000);
+}
+
+
+
+function F_rocketFly(){
+    clearInterval( O_sky.timer );
+    $('#fire1').animate({'opacity':1,'top':834},1000,'linear',function () {
+
+    });
+    $('.fireFlame').animate({'opacity':1,'top':820},1000,'linear',function () {
+        clearInterval(fire2.timer);
+        clearInterval(fire3.timer);
+        fire3.startAnimation();
+        fire2.startAnimation();
+        fire1.startAnimation();
+    });
+
+
+
+    setTimeout(
+        function(){$('.fireFlame').animate({'opacity':0},1000,'linear',function(){
+                clearInterval(fire2.timer);
+                clearInterval(fire3.timer);
+                $('#rocket2').animate({'top':1200/*,'left':-190,'height':'-=910px','width':'-=370px'*/},10000,'easeInQuart');
+            }
+        );
+
+        },22000);
+
+
+    setTimeout(
+        function(){$('#fire1').animate({'opacity':0,top:700},1000,'linear',function(){
+                clearInterval(fire1.timer);
+                $('#rocket1').animate({'top':1200/*,'left':-190,'height':'-=910px','width':'-=254px'*/},10000,'easeInQuart');
+                $('#air-plane').css({'transform':'rotate(75 deg)'});
+            }
+        )
+        },62000);
+
+
+setTimeout(function () {
+    O_sky.timer = setInterval(function(){
+        n+=20;
+        O_sky.style.top = O_sky.offsetTop+20+'px';
+        O_skyAddon.style.top = O_skyAddon.offsetTop+20+'px';
+        // CaodiAndDadi.style.top = CaodiAndDadi.offsetTop+20+'px';
+        O_Sea.style.top = O_Sea.offsetTop+20+'px';
+        O_DaF.style.top = O_DaF.offsetTop+20+'px';
+        O_DaW.style.top = O_DaW.offsetTop+20+'px';
+        O_brickWall.style.top = O_brickWall.offsetTop+20+'px';
+        O_Tv.style.top = O_Tv.offsetTop+20+'px';
+        Oimg_Tinny.style.display = "none";
+        O_HotBalon.style.display = "none";
+        if($(O_rocket).offset().top-104 <=$('#sky5').offset().top){
+            if(!O_csky5.Onoff) {
+                $('#sky5').vidbg({
+                    // 'mp4': './img/earth.mp4',
+                    'mp4': 'https://dl3.pushbulletusercontent.com/R0CC9uXc0VmBJoKtCFHrVvTH6XJOVBEl/earth.mp4.mp4',
+                    'webm': './img/earth.webm',
+                }, {
+                    // Options
+                    muted: true,
+                    loop: true,
+                    overlay: true,
+                });
+                O_csky5.Onoff = true;
+            }
+        }
+        if($('#sky5').offset().top+O_csky5.offsetHeight >= window.innerHeight){
+            /**
+             * 设置位置的地方
+             */
+            clearInterval(O_sky.timer)
+        }
+    },20);
+},3000);
+
+
+}
+
+
+/* fireFlame fire2-*/
+
+
+
+
+var fire1 = new C_actor('fire1','fire1  fire1-',27,20,'','',0);
+
+var fire2 = new C_actor('fire2','fireFlame fire2-',15,120,function () {
+    clearInterval(fire2.timer);
+    fire2_2.startAnimation();
+},'',0);
+var fire2_2 = new C_actor('fire2','fireFlame fire2-',27,100,'',15,15);
+var fire3 = new C_actor('fire3','fireFlame fire2-',15,120,function () {
+    clearInterval(fire3.timer);
+    fire3_2.startAnimation();
+},'',0);
+var fire3_2 = new C_actor('fire3','fireFlame fire2-',27,100,'',15,15);
+
+//数据动画部分
+
+
+// clearInterval(obj.timer);
+
+function F_meettheAbout(){
+    F_meettheWall(O_about,false,-400);
+    var OT_meetAboutTimer = setInterval(
+        function(){
+            if (!O_about.Onoff){
+                clearInterval(OT_meetAboutTimer);
+                clearInterval(O_about.timer);
+                F_displayWords(words[1]);
+                F_animateAbout();
+                F_meettheChengdu();
+            }
+        },20);
+}
+
+
+function F_animateAbout(){
+    $('#Code-mill').animate({'bottom': '240px'}, 500, 'easeOutElastic',function () {
+        $('#Design-mill').animate({'bottom': '120px'}, 500, 'easeOutElastic',function () {
+            $('#Animation-mill').animate({'bottom': '240px'}, 500, 'easeOutElastic',function () {
+                $('#Exercise-mill').animate({'bottom': '370px'}, 500, 'easeOutElastic').addClass('rotateMill4');
+                $('#mill-pole4').animate({'height': '470px'}, 500, 'easeOutElastic');
+            }).addClass('rotateMill3');
+            $('#mill-pole3').animate({'height': '340px'}, 500, 'easeOutElastic');
+        }).addClass('rotateMill2');
+        $('#mill-pole2').animate({'height': '220px'}, 500, 'easeOutElastic');
+
+    }).addClass('rotateMill1');
+
+    $('#mill-pole1').animate({'height': '340px'}, 500, 'easeOutElastic');
+
+
+
+
+}
+
+function  F_meettheChengdu(){
+    F_meettheWall(O_chengdu,false,400);
+    var OT_meetChengduTimer = setInterval(
+        function(){
+            if (!O_chengdu.Onoff){
+                clearInterval(OT_meetChengduTimer);
+                clearInterval(O_about.timer);
+
+                F_displayWords(words[2]);
+                F_animateChengdu();
+                F_meettheSchool();
+
+                F_removeKeyListener(walkstyle1, walkstyle2, walkstyle2);
+                setTimeout(function () {
+                    F_addKeyListener(walkstyle1, walkstyle2, walkstyle2);
+                },2000)
+
+            }
+        },20);
+}
+
+
+
+
+
+
+function F_animateChengdu() {
+    $('#frame').animate({'bottom': '0'}, 1500, 'easeOutBounce', function
+        () {
+        $('#panda').animate({'bottom': '65px'}, 1000, 'easeOutBounce', function () {
+            $('#hat').animate({'bottom': '356px'}, 700, 'easeOutBounce');
+        });
+    });
+    $('#bamboo').animate({'opacity': 1}, 7000, 'linear');
+    $('#text').animate({'opacity': 1}, 7000, 'linear');
+}
+
+function  F_meettheSchool(){
+    F_meettheWall(O_school,false,1080);
+    var OT_meetschoolTimer = setInterval(
+        function(){
+            if (!O_school.Onoff){
+                clearInterval(OT_meetschoolTimer);
+                F_displayWords(words[3]);
+                $('#stationery').show();
+                F_buildschool();
+                F_stationery();
+                F_animateBachelor();
+                F_removeKeyListener(walkstyle1, walkstyle2, walkstyle2);
+                setTimeout(function () {
+                    F_addKeyListener(walkstyle1, walkstyle2, walkstyle2);
+                },2000)
+            }
+        },20);
+}
+
+
+function F_buildschool() {
+    $('#building-A').animate({'opacity': '1'}, 1000, 'linear', function () {
+        $('#building-B').animate({'bottom': '0px'}, 150, 'linear', function () {
+            $('#building-C').animate({'left': '97px'}, 150, 'linear', function () {
+                $('#building-D').animate({'bottom': '5px'}, 150, 'linear', function () {
+                    $('#building-E').animate({'left': '385px'}, 150, 'linear', function () {
+                        $('#building-F').animate({'bottom': '0px'}, 150, 'linear', function () {
+                            $('#building-Q').animate({'bottom': '347px'}, 600, 'easeOutBounce');
+
+
+                            $('#building-R').animate({'left': '564px'}, 150, 'linear', function () {
+                                $('#building-H').animate({'bottom': '48px'}, 150, 'linear', function () {
+                                    $('#building-I').animate({'bottom': '316px'}, 150, 'linear', function () {
+                                        $('#building-J').animate({'left': '625px'}, 150, 'linear', function () {
+                                            $('#building-K').animate({'bottom': '160px'}, 150, 'linear', function () {
+                                                $('#building-L').animate({'bottom': '16px'}, 150, 'linear', function () {
+                                                    $('#building-M').animate({'left': '42px'}, 150, 'linear');
+                                                });
+                                            });
+                                        });
+                                    });
+
+                                });
+                            });
+
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+
+    $('#building-A2').animate({'opacity': '1'}, 1000, 'linear', function () {
+        $('#building-B2').animate({'bottom': '0px'}, 150, 'linear', function () {
+            $('#building-C2').animate({'left': '97px'}, 150, 'linear', function () {
+                $('#building-D2').animate({'bottom': '5px'}, 150, 'linear', function () {
+                    $('#building-E2').animate({'left': '385px'}, 150, 'linear', function () {
+                        $('#building-F2').animate({'bottom': '0px'}, 150, 'linear', function () {
+                            $('#building-Q2').animate({'bottom': '347px'}, 600, 'easeOutBounce');
+
+
+                            $('#building-R2').animate({'left': '564px'}, 150, 'linear', function () {
+                                $('#building-H2').animate({'bottom': '48px'}, 150, 'linear', function () {
+                                    $('#building-I2').animate({'bottom': '316px'}, 150, 'linear', function () {
+                                        $('#building-J2').animate({'left': '625px'}, 150, 'linear', function () {
+                                            $('#building-K2').animate({'bottom': '160px'}, 150, 'linear', function () {
+                                                $('#building-L2').animate({'bottom': '16px'}, 150, 'linear', function () {
+                                                    $('#building-M2').animate({'left': '42px'}, 150, 'linear');
+                                                });
+                                            });
+                                        });
+                                    });
+
+                                });
+                            });
+
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+}
+
+
+function F_stationery() {
+    $('#book1').css({'bottom':'-10%','transform':'rotate(45deg)'});
+    $('#book2').css({'bottom':'-10%','transform':'rotate(-45deg)'});
+    $('#jiazi').css({'left':'90%','transform':'rotate(45deg)'});
+    $('#knife').css({'bottom':'0%','transform':'rotate(-45deg)'});
+    $('#magnify').css({'bottom':'0%','transform':'rotate(-45deg)'});
+    $('#notebook').css({'left':'0','transform':'rotate(45deg)'});
+    $('#ruler1').css({'right':'0','transform':'rotate(45deg)'});
+    $('#ruler2').css({'left':'-10%','transform':'rotate(80deg)'});
+    $('#timer').css({'bottom':'0%','transform':'rotate(45deg)'});
+    $('#yuangui').css({'right':'0','transform':'rotate(45deg)'});
+    $('#pencil').css({'right':'0','transform':'rotate(-45deg)'});
+    $('#upan').css({'left':'0','transform':'rotate(-45deg)'});
+}
+
+
+function F_stationeryHide() {
+    $('#book1').css({'bottom':'-80%','transform':'rotate(0)'});
+    $('#book2').css({'bottom':'-80%','transform':'rotate(0)'});
+    $('#jiazi').css({'left':'120%','transform':'rotate(0)'});
+    $('#knife').css({'bottom':'-30%','transform':'rotate(0)'});
+    $('#magnify').css({'bottom':'-30%','transform':'rotate(0)'});
+    $('#notebook').css({'left':'-10%','transform':'rotate(0)'});
+    $('#ruler1').css({'right':'-20%','transform':'rotate(0)'});
+    $('#ruler2').css({'left':'-40%','transform':'rotate(0)'});
+    $('#timer').css({'bottom':'-20%','transform':'rotate(0)'});
+    $('#yuangui').css({'right':'-10%','transform':'rotate(0)'});
+    $('#pencil').css({'right':'-10%','transform':'rotate(0)'});
+    $('#upan').css({'left':'-10%','transform':'rotate(0)'});
+    setTimeout(function(){
+        $('#stationery').hide();
+        },100
+    );
+}
+
+
+function F_animateBachelor() {
+    $('#bachelor').animate({'left': 75,
+    'top': 116,'opacity':1},1000,'easeOutBounce');
+    $('#schoolhatimg').addClass('bachelorIMG');
+    setTimeout(function(){
+
+        $('#bachelor').animate({
+            'top': 90},100,'easeOutBounce');
+        $('#SchoolHatImg').addClass('boomIMG').removeClass('bachelorIMG');},2400);
+    setTimeout(function(){
+        $('#bachelor').animate({
+            'top': 116},1000,'easeOutBounce');
+        $('#SchoolHatImg').addClass('helmetIMG').removeClass('boomIMG');},2500);
+}
+
+
+function F_flyhelmet() {
+    $('#bachelor').animate({'left':0,
+        'top': '-1300%' ,'opacity':0},2000,'linear');
+}
+
+function F_displayWords(which) {
+    clearInterval(wordTimer2);
+    clearInterval(wordTimer);
+    clearTimeout(wordTimeOut);
+    $('#displayword').css({'bottom':'-80%'});
+    iWord.innerHTML= '';
+    var index = 0;
+    var length = which.length;
+
+    wordTimer2 =setInterval(function () {
+        toggleGBClass();
+    },200);
+
+    function start(){
+        iWord.innerHTML= '';
+
+        wordTimer=setInterval(function(){
+            iWord.innerHTML +=which.charAt(index);
+            if(index++ === length){
+                clearInterval(wordTimer);
+
+                wordTimeOut = setTimeout(function () {
+                    $('#displayword').css({'bottom':'-100%'});
+                },3000)
+            }
+
+        },100);
+    }
+
+
+
+
+    start();
+
+    function toggleGBClass() {
+        if(O_Guangbiao.className =='show'){
+            O_Guangbiao.className ='hide';
+        }else {
+            O_Guangbiao.className ='show';
+        }
+    }
+}
+
+
+function F_meetsteelRight(){
+
+    var n = parseFloat($(O_karl).offset().left);
+    O_brickWall.timer = setInterval(function () {
+        if (n <= parseFloat($(O_brickWall).offset().left) ) {
+            O_brickWall.Onoff = false;//如果从右到左 的时候
+            console.log('到了左边了')
+            clearInterval( O_brickWall.timer);
+        } else {
+            O_brickWall.Onoff = true;
+        }
+    }, 15);
+}
