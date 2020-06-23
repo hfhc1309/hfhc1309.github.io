@@ -8,3 +8,4 @@ Blog：[https://www.hfhc1309.online](https://www.hfhc1309.online)
 
 Modify
 1. 把预加载页面的%100修改为100%
+2. 新增单点屏幕页面走动（支持手机）
